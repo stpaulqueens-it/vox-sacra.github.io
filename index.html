@@ -25,50 +25,50 @@
           <span class="toc-arrow" x-text="tocOpen ? '▲' : '▼'">▼</span>
         </button>
       </div>
-      <div class="toc-content" x-show="tocOpen" x-transition>
+      <div class="toc-content" x-show="tocOpen" x-transition @click.self="tocOpen = false">
       <ol class="lang-en">
-        <li><a href="#opening">Opening Music &amp; Prayer</a></li>
-        <li><a href="#reading1">Reading I – Genesis 3:8–15</a></li>
-        <li><a href="#carol1">O Come, O Come, Emmanuel</a></li>
-        <li><a href="#reading2">Reading II – Genesis 22:15–18</a></li>
+        <li><a href="#opening" @click="tocOpen = false">Opening Music &amp; Prayer</a></li>
+        <li><a href="#reading1" @click="tocOpen = false">Reading I – Genesis 3:8–15</a></li>
+        <li><a href="#carol1" @click="tocOpen = false">O Come, O Come, Emmanuel</a></li>
+        <li><a href="#reading2" @click="tocOpen = false">Reading II – Genesis 22:15–18</a></li>
         <li><span>Creator of the Stars of Night</span></li>
-        <li><a href="#reading3">Reading III – Isaiah 9:1–6</a></li>
-        <li><a href="#carol3">Lo, How a Rose E'er Blooming</a></li>
-        <li><a href="#reading4">Reading IV – Isaiah 11:1–9</a></li>
-        <li><a href="#carol4">Once in Royal David's City</a></li>
-        <li><a href="#reading5">Reading V – Luke 1:26–38</a></li>
-        <li><a href="#carol5">Ave Maria</a></li>
-        <li><a href="#reading6">Reading VI – Matthew 1:18–25</a></li>
-        <li><a href="#carol6">Silent Night</a></li>
-        <li><a href="#reading7">Reading VII – Luke 2:8–20</a></li>
-        <li><a href="#carol7">Hark! The Herald Angels Sing</a></li>
-        <li><a href="#reading8">Reading VIII – Matthew 2:1–12</a></li>
-        <li><a href="#carol8">In Dulci Jubilo</a></li>
-        <li><a href="#reading9">Reading IX – John 1:1–14</a></li>
-        <li><a href="#carol9">O Come, All Ye Faithful</a></li>
-        <li><a href="#closing">Closing Prayer &amp; Final Carol – The First Noel</a></li>
+        <li><a href="#reading3" @click="tocOpen = false">Reading III – Isaiah 9:1–6</a></li>
+        <li><a href="#carol3" @click="tocOpen = false">Lo, How a Rose E'er Blooming</a></li>
+        <li><a href="#reading4" @click="tocOpen = false">Reading IV – Isaiah 11:1–9</a></li>
+        <li><a href="#carol4" @click="tocOpen = false">Once in Royal David's City</a></li>
+        <li><a href="#reading5" @click="tocOpen = false">Reading V – Luke 1:26–38</a></li>
+        <li><a href="#carol5" @click="tocOpen = false">Ave Maria</a></li>
+        <li><a href="#reading6" @click="tocOpen = false">Reading VI – Matthew 1:18–25</a></li>
+        <li><a href="#carol6" @click="tocOpen = false">Silent Night</a></li>
+        <li><a href="#reading7" @click="tocOpen = false">Reading VII – Luke 2:8–20</a></li>
+        <li><a href="#carol7" @click="tocOpen = false">Hark! The Herald Angels Sing</a></li>
+        <li><a href="#reading8" @click="tocOpen = false">Reading VIII – Matthew 2:1–12</a></li>
+        <li><a href="#carol8" @click="tocOpen = false">In Dulci Jubilo</a></li>
+        <li><a href="#reading9" @click="tocOpen = false">Reading IX – John 1:1–14</a></li>
+        <li><a href="#carol9" @click="tocOpen = false">O Come, All Ye Faithful</a></li>
+        <li><a href="#closing" @click="tocOpen = false">Closing Prayer &amp; Final Carol – The First Noel</a></li>
       </ol>
       <ol class="lang-ko" style="display: none;">
-        <li><a href="#opening">시작 음악 및 기도</a></li>
-        <li><a href="#reading1">낭독 1 – 창세기 3:8-15</a></li>
-        <li><a href="#carol1">오라 오라 임마누엘</a></li>
-        <li><a href="#reading2">낭독 2 – 창세기 22:15-18</a></li>
+        <li><a href="#opening" @click="tocOpen = false">시작 음악 및 기도</a></li>
+        <li><a href="#reading1" @click="tocOpen = false">낭독 1 – 창세기 3:8-15</a></li>
+        <li><a href="#carol1" @click="tocOpen = false">오라 오라 임마누엘</a></li>
+        <li><a href="#reading2" @click="tocOpen = false">낭독 2 – 창세기 22:15-18</a></li>
         <li><span>밤의 별들을 지으신 창조주</span></li>
-        <li><a href="#reading3">낭독 3 – 이사야 9:1-6</a></li>
-        <li><a href="#carol3">로즈가 피었도다</a></li>
-        <li><a href="#reading4">낭독 4 – 이사야 11:1-9</a></li>
-        <li><a href="#carol4">다윗 성에 한 번</a></li>
-        <li><a href="#reading5">낭독 5 – 누가복음 1:26-38</a></li>
-        <li><a href="#carol5">아베 마리아</a></li>
-        <li><a href="#reading6">낭독 6 – 마태복음 1:18-25</a></li>
-        <li><a href="#carol6">고요한 밤</a></li>
-        <li><a href="#reading7">낭독 7 – 누가복음 2:8-20</a></li>
-        <li><a href="#carol7">기쁘다 구주 오셨네</a></li>
-        <li><a href="#reading8">낭독 8 – 마태복음 2:1-12</a></li>
-        <li><a href="#carol8">인 둘치 주빌로</a></li>
-        <li><a href="#reading9">낭독 9 – 요한복음 1:1-14</a></li>
-        <li><a href="#carol9">오라 모든 신실한 자들</a></li>
-        <li><a href="#closing">마침 기도 및 마지막 성가 – 첫 번째 노엘</a></li>
+        <li><a href="#reading3" @click="tocOpen = false">낭독 3 – 이사야 9:1-6</a></li>
+        <li><a href="#carol3" @click="tocOpen = false">로즈가 피었도다</a></li>
+        <li><a href="#reading4" @click="tocOpen = false">낭독 4 – 이사야 11:1-9</a></li>
+        <li><a href="#carol4" @click="tocOpen = false">다윗 성에 한 번</a></li>
+        <li><a href="#reading5" @click="tocOpen = false">낭독 5 – 누가복음 1:26-38</a></li>
+        <li><a href="#carol5" @click="tocOpen = false">아베 마리아</a></li>
+        <li><a href="#reading6" @click="tocOpen = false">낭독 6 – 마태복음 1:18-25</a></li>
+        <li><a href="#carol6" @click="tocOpen = false">고요한 밤</a></li>
+        <li><a href="#reading7" @click="tocOpen = false">낭독 7 – 누가복음 2:8-20</a></li>
+        <li><a href="#carol7" @click="tocOpen = false">기쁘다 구주 오셨네</a></li>
+        <li><a href="#reading8" @click="tocOpen = false">낭독 8 – 마태복음 2:1-12</a></li>
+        <li><a href="#carol8" @click="tocOpen = false">인 둘치 주빌로</a></li>
+        <li><a href="#reading9" @click="tocOpen = false">낭독 9 – 요한복음 1:1-14</a></li>
+        <li><a href="#carol9" @click="tocOpen = false">오라 모든 신실한 자들</a></li>
+        <li><a href="#closing" @click="tocOpen = false">마침 기도 및 마지막 성가 – 첫 번째 노엘</a></li>
       </ol>
       </div>
     </div>
@@ -541,11 +541,6 @@
 
   </main>
 
-  <footer class="site-footer">
-    <p class="lang-en">Thank you for joining us for this Service of Lessons &amp; Carols.</p>
-    <p class="lang-ko" style="display: none;">이 말씀과 성가의 밤 예배에 함께해 주셔서 감사합니다.</p>
-  </footer>
-
   <nav class="bottom-nav">
     <div class="bottom-nav-inner">
       <button class="nav-arrow nav-arrow-left" @click="scrollToSection(currentSectionIndex - 1)" :disabled="currentSectionIndex === 0" aria-label="Previous section">
@@ -648,6 +643,10 @@
           const viewportWidth = window.innerWidth;
           const targetScroll = index * viewportWidth;
           
+          // Reset window vertical scroll first
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          
+          // Then scroll horizontally to the section
           this.$refs.mainContent.scrollTo({
             left: targetScroll,
             behavior: 'smooth'
