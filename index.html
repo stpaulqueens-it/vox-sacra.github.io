@@ -38,6 +38,22 @@
   </script>
 </head>
 <body x-data="app()" x-init="init()" :style="`--text-zoom: ${textZoom}`">
+  <!-- Language Selection Modal -->
+  <div class="language-modal" x-show="showLanguageModal" x-transition>
+    <div class="language-modal-content">
+      <h2 class="lang-en">Select Language</h2>
+      <h2 class="lang-ko" style="display: none;">언어 선택</h2>
+      <div class="language-modal-buttons">
+        <button class="lang-modal-btn" @click="selectLanguage('en')">
+          <span class="lang-label">English</span>
+        </button>
+        <button class="lang-modal-btn" @click="selectLanguage('ko')">
+          <span class="lang-label">한국어</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <nav class="toc">
     <div class="toc-inner">
       <div class="toc-bar">
@@ -100,7 +116,7 @@
 
   <main class="content" id="mainContent" @scroll="updateNavButtons()" x-ref="mainContent">
     <section id="lessons-carols" class="card">
-      <img src="cover-photo.jpg" alt="Lessons &amp; Carols" class="cover-photo" />
+      <img src="img/cover-photo.jpg" alt="Lessons &amp; Carols" class="cover-photo" />
     </section>
 
     <section id="opening" class="card">
@@ -529,6 +545,29 @@
 
   </main>
 
+  <div class="bottom-nav-hint" x-show="showCoverOverlay && currentSectionIndex === 0" x-transition>
+    <div class="hint-arrow-left" :style="`left: ${rightArrowLeft}px; transform: translateX(-50%);`">
+      <div class="hint-content">
+        <p class="lang-en">Scroll forward</p>
+        <p class="lang-ko" style="display: none;">앞으로 스크롤</p>
+      </div>
+      <div class="arrow-pointer"></div>
+    </div>
+    <div class="hint-arrow-center" :style="`left: ${menuButtonLeft}px; transform: translateX(-50%);`">
+      <div class="hint-content">
+        <p class="lang-en">Font size</p>
+        <p class="lang-ko" style="display: none;">글꼴 크기</p>
+      </div>
+      <div class="arrow-pointer"></div>
+    </div>
+    <button class="hint-close" @click="showCoverOverlay = false" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
   <nav class="bottom-nav">
     <div class="bottom-nav-inner">
       <button class="nav-arrow nav-arrow-left" @click="scrollToSection(currentSectionIndex - 1)" :disabled="currentSectionIndex === 0" aria-label="Previous section">
@@ -537,7 +576,7 @@
         </svg>
       </button>
       <div class="menu-container">
-        <button class="menu-toggle" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Toggle menu">
+        <button class="menu-toggle" x-ref="menuButton" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Toggle menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="6" x2="21" y2="6"/>
             <line x1="3" y1="12" x2="21" y2="12"/>
@@ -565,7 +604,7 @@
           </div>
         </div>
       </div>
-      <button class="nav-arrow nav-arrow-right" @click="scrollToSection(currentSectionIndex + 1)" :disabled="currentSectionIndex === sections.length - 1" aria-label="Next section">
+      <button class="nav-arrow nav-arrow-right" x-ref="rightArrowButton" @click="scrollToSection(currentSectionIndex + 1)" :disabled="currentSectionIndex === sections.length - 1" aria-label="Next section">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 18l6-6-6-6"/>
         </svg>
@@ -581,18 +620,24 @@
         currentSectionIndex: 0,
         sections: [],
         textZoom: 1.0,
+        showCoverOverlay: true,
+        showLanguageModal: true,
+        rightArrowLeft: 0,
+        menuButtonLeft: 0,
         
         init() {
           // Initialize sections
           this.sections = Array.from(this.$refs.mainContent.querySelectorAll('section.card'));
           
-          // Set initial language
-          this.switchLanguage('en');
+          // Don't set language automatically - wait for user selection from modal
+          // Set English as default for modal display only
+          const langEnElements = document.querySelectorAll('.lang-en');
+          const langKoElements = document.querySelectorAll('.lang-ko');
+          langEnElements.forEach(el => el.style.display = '');
+          langKoElements.forEach(el => el.style.display = 'none');
           
-          // Start at the first section (Lessons & Carols)
-          setTimeout(() => {
-            this.scrollToSection(0);
-          }, 100);
+          // Start at the first section (Lessons & Carols) after language is selected
+          // This will be handled after modal closes
           
           // Update nav buttons
           this.updateNavButtons();
@@ -633,7 +678,44 @@
           // Update nav buttons on resize
           window.addEventListener('resize', () => {
             this.updateNavButtons();
+            this.updateHintPositions();
           });
+          
+          // Update hint positions
+          setTimeout(() => {
+            this.updateHintPositions();
+          }, 200);
+        },
+        
+        updateHintPositions() {
+          if (this.$refs.rightArrowButton && this.$refs.menuButton) {
+            const rightArrowRect = this.$refs.rightArrowButton.getBoundingClientRect();
+            const menuButtonRect = this.$refs.menuButton.getBoundingClientRect();
+            const hintContainer = document.querySelector('.bottom-nav-hint');
+            
+            if (hintContainer) {
+              const hintRect = hintContainer.getBoundingClientRect();
+              const hintStyles = getComputedStyle(hintContainer);
+              // Calculate position relative to the hint container's content area (padding box)
+              // getBoundingClientRect() returns border box, but absolute positioning uses padding box
+              const hintPaddingLeft = parseFloat(hintStyles.paddingLeft) || 0;
+              // Button center X position relative to viewport
+              const rightArrowCenterX = rightArrowRect.left + (rightArrowRect.width / 2);
+              const menuButtonCenterX = menuButtonRect.left + (menuButtonRect.width / 2);
+              // Position relative to padding box: viewport position - border box left - padding
+              this.rightArrowLeft = rightArrowCenterX - hintRect.left - hintPaddingLeft;
+              this.menuButtonLeft = menuButtonCenterX - hintRect.left - hintPaddingLeft;
+            }
+          }
+        },
+        
+        selectLanguage(lang) {
+          this.switchLanguage(lang);
+          this.showLanguageModal = false;
+          // Start at the first section after language selection
+          setTimeout(() => {
+            this.scrollToSection(0);
+          }, 100);
         },
         
         switchLanguage(lang) {
