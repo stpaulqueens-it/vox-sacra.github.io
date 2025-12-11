@@ -275,6 +275,15 @@ html {
   border-radius: 0.5rem;
 }
 
+.prayer-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  margin: 0;
+}
+
 .bottom-nav-hint {
   position: fixed;
   bottom: 80px;

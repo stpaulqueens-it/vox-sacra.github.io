@@ -66,7 +66,10 @@
       <div class="toc-content" x-show="tocOpen" x-transition @click.self="tocOpen = false">
       <ol class="lang-en">
         <li><a href="#lessons-carols" @click="tocOpen = false">Lessons &amp; Carols</a></li>
-        <li><a href="#opening" @click="tocOpen = false">Opening Music &amp; Prayer</a></li>
+        <li><a href="#prayer-intro" @click="tocOpen = false">Opening Prayer: Introduction</a></li>
+        <li><a href="#prayer-our-father" @click="tocOpen = false">Opening Prayer: Our Father</a></li>
+        <li><a href="#prayer-hail-mary" @click="tocOpen = false">Opening Prayer: Hail Mary</a></li>
+        <li><a href="#prayer-closing" @click="tocOpen = false">Opening Prayer: Closing</a></li>
         <li><a href="#reading1" @click="tocOpen = false">Reading I – Genesis 3:8–15</a></li>
         <li><a href="#carol1" @click="tocOpen = false">O Come, O Come, Emmanuel</a></li>
         <li><a href="#reading2" @click="tocOpen = false">Reading II – Genesis 22:15–18</a></li>
@@ -89,7 +92,10 @@
       </ol>
       <ol class="lang-ko" style="display: none;">
         <li><a href="#lessons-carols" @click="tocOpen = false">말씀과 성가</a></li>
-        <li><a href="#opening" @click="tocOpen = false">시작 음악 및 기도</a></li>
+        <li><a href="#prayer-intro" @click="tocOpen = false">시작 기도: 서론</a></li>
+        <li><a href="#prayer-our-father" @click="tocOpen = false">시작 기도: 주님의 기도</a></li>
+        <li><a href="#prayer-hail-mary" @click="tocOpen = false">시작 기도: 성모송</a></li>
+        <li><a href="#prayer-closing" @click="tocOpen = false">시작 기도: 마침</a></li>
         <li><a href="#reading1" @click="tocOpen = false">낭독 1 – 창세기 3:8-15</a></li>
         <li><a href="#carol1" @click="tocOpen = false">오라 오라 임마누엘</a></li>
         <li><a href="#reading2" @click="tocOpen = false">낭독 2 – 창세기 22:15-18</a></li>
@@ -119,13 +125,20 @@
       <img src="img/cover-photo.jpg" alt="Lessons &amp; Carols" class="cover-photo" />
     </section>
 
-    <section id="opening" class="card">
-      <p class="lang-en"><em>Organ / Instrumental:</em> "O Come, O Come, Emmanuel" or <em>In dulci jubilo</em> (Johann Michael Bach)</p>
-      <p class="lang-ko" style="display: none;"><em>오르간 / 기악:</em> "오라 오라 임마누엘" 또는 <em>인 둘치 주빌로</em> (요한 미하엘 바흐)</p>
-      <h3 class="lang-en">Opening Prayer</h3>
-      <h3 class="lang-ko" style="display: none;">시작 기도</h3>
-      <p class="lang-en">The service begins with an opening prayer led by the presider.</p>
-      <p class="lang-ko" style="display: none;">예배는 주례자가 인도하는 시작 기도로 시작됩니다.</p>
+    <section id="prayer-intro" class="card">
+      <img src="img/prayer-1-introduction.png" alt="Opening Prayer: Introduction" class="prayer-image" />
+    </section>
+
+    <section id="prayer-our-father" class="card">
+      <img src="img/prayer-2-pater-noster.png" alt="Opening Prayer: Our Father" class="prayer-image" />
+    </section>
+
+    <section id="prayer-hail-mary" class="card">
+      <img src="img/prayer-3-ave-maria.png" alt="Opening Prayer: Hail Mary" class="prayer-image" />
+    </section>
+
+    <section id="prayer-closing" class="card">
+      <img src="img/prayer-4-closing.png" alt="Opening Prayer: Closing" class="prayer-image" />
     </section>
 
     <section id="reading1" class="card">
@@ -511,8 +524,6 @@
     </section>
 
     <section id="closing" class="card">
-      <p class="lang-en">The service concludes with a closing prayer and blessing.</p>
-      <p class="lang-ko" style="display: none;">예배는 마침 기도와 축복으로 마무리됩니다.</p>
       <section class="carol">
         <h3 class="lang-en">Final Carol – The First Noel</h3>
         <h3 class="lang-ko" style="display: none;">마지막 성가 – 첫 번째 노엘</h3>
