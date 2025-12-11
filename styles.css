@@ -19,7 +19,11 @@ body {
   overflow-x: hidden;
   min-height: 100%;
   font-size: calc(1rem * var(--text-zoom, 1));
-  touch-action: pan-x pan-y;
+  touch-action: manipulation;
+}
+
+html {
+  touch-action: manipulation;
 }
 
 .site-header {

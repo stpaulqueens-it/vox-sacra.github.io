@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script>
-    // Prevent double-tap zoom
+    // Prevent pinch zoom and double-tap zoom
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function (event) {
       const now = Date.now();
@@ -17,6 +17,24 @@
       }
       lastTouchEnd = now;
     }, false);
+    
+    // Prevent pinch zoom gesture
+    document.addEventListener('gesturestart', function (e) {
+      e.preventDefault();
+    });
+    document.addEventListener('gesturechange', function (e) {
+      e.preventDefault();
+    });
+    document.addEventListener('gestureend', function (e) {
+      e.preventDefault();
+    });
+    
+    // Prevent wheel zoom (Ctrl/Cmd + scroll)
+    document.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+      }
+    }, { passive: false });
   </script>
 </head>
 <body x-data="app()" x-init="init()" :style="`--text-zoom: ${textZoom}`">
