@@ -383,6 +383,14 @@ html {
   justify-content: center;
 }
 
+.zoom-percentage {
+  color: #f9fafb;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: 3rem;
+  text-align: center;
+}
+
 .zoom-btn {
   background: rgba(251, 191, 36, 0.1);
   border: 2px solid rgba(251, 191, 36, 0.3);
