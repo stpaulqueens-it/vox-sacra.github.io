@@ -38,13 +38,6 @@
   </script>
 </head>
 <body x-data="app()" x-init="init()" :style="`--text-zoom: ${textZoom}`">
-  <header class="site-header">
-    <div class="header-inner">
-      <h1 class="lang-ko">말씀과 성가</h1>
-      <h1 class="lang-en">Lessons &amp; Carols</h1>
-    </div>
-  </header>
-
   <nav class="toc">
     <div class="toc-inner">
       <div class="toc-bar">
@@ -56,6 +49,7 @@
       </div>
       <div class="toc-content" x-show="tocOpen" x-transition @click.self="tocOpen = false">
       <ol class="lang-en">
+        <li><a href="#lessons-carols" @click="tocOpen = false">Lessons &amp; Carols</a></li>
         <li><a href="#opening" @click="tocOpen = false">Opening Music &amp; Prayer</a></li>
         <li><a href="#reading1" @click="tocOpen = false">Reading I – Genesis 3:8–15</a></li>
         <li><a href="#carol1" @click="tocOpen = false">O Come, O Come, Emmanuel</a></li>
@@ -78,6 +72,7 @@
         <li><a href="#closing" @click="tocOpen = false">Closing Prayer &amp; Final Carol – The First Noel</a></li>
       </ol>
       <ol class="lang-ko" style="display: none;">
+        <li><a href="#lessons-carols" @click="tocOpen = false">말씀과 성가</a></li>
         <li><a href="#opening" @click="tocOpen = false">시작 음악 및 기도</a></li>
         <li><a href="#reading1" @click="tocOpen = false">낭독 1 – 창세기 3:8-15</a></li>
         <li><a href="#carol1" @click="tocOpen = false">오라 오라 임마누엘</a></li>
@@ -104,9 +99,11 @@
   </nav>
 
   <main class="content" id="mainContent" @scroll="updateNavButtons()" x-ref="mainContent">
+    <section id="lessons-carols" class="card">
+      <img src="cover-photo.jpg" alt="Lessons &amp; Carols" class="cover-photo" />
+    </section>
+
     <section id="opening" class="card">
-      <h2 class="lang-en">Opening Music</h2>
-      <h2 class="lang-ko" style="display: none;">시작 음악</h2>
       <p class="lang-en"><em>Organ / Instrumental:</em> "O Come, O Come, Emmanuel" or <em>In dulci jubilo</em> (Johann Michael Bach)</p>
       <p class="lang-ko" style="display: none;"><em>오르간 / 기악:</em> "오라 오라 임마누엘" 또는 <em>인 둘치 주빌로</em> (요한 미하엘 바흐)</p>
       <h3 class="lang-en">Opening Prayer</h3>
@@ -116,8 +113,6 @@
     </section>
 
     <section id="reading1" class="card">
-      <h2 class="lang-en">Reading I – Genesis 3:8–15</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 1 – 창세기 3:8-15</h2>
       <p class="lang-en"><em>The Fall and the First Promise of Redemption</em></p>
       <p class="lang-ko" style="display: none;"><em>타락과 구원의 첫 약속</em></p>
       <p class="lang-en">When they heard the sound of the LORD God walking about in the garden at the breezy time of the day, the man and his wife hid themselves from the LORD God among the trees of the garden.</p>
@@ -141,8 +136,6 @@
     </section>
 
     <section id="carol1" class="card carol">
-      <h2 class="lang-en">Carol – O Come, O Come, Emmanuel</h2>
-      <h2 class="lang-ko" style="display: none;">성가 – 오라 오라 임마누엘</h2>
       <p class="lang-en"><em>15th Century French melody, arr. David Willcocks</em></p>
       <p class="lang-ko" style="display: none;"><em>15세기 프랑스 선율, 편곡 데이비드 윌콕스</em></p>
       <h3 class="lang-en">Refrain</h3>
@@ -182,8 +175,6 @@
     </section>
 
     <section id="reading2" class="card">
-      <h2 class="lang-en">Reading II – Genesis 22:15–18</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 2 – 창세기 22:15-18</h2>
       <p class="lang-en"><em>God's Promise to Abraham</em></p>
       <p class="lang-ko" style="display: none;"><em>아브라함에게 하신 하느님의 약속</em></p>
       <p class="lang-en">A second time the angel of the LORD called to Abraham from heaven and said:</p>
@@ -193,8 +184,6 @@
     </section>
 
     <section class="card carol">
-      <h2 class="lang-en">Hymn – Creator of the Stars of Night</h2>
-      <h2 class="lang-ko" style="display: none;">찬송 – 밤의 별들을 지으신 창조주</h2>
       <p class="lang-en"><em>Latin hymn (9th Century)</em></p>
       <p class="lang-ko" style="display: none;"><em>라틴 찬송 (9세기)</em></p>
       <p class="lang-en">This ancient evening hymn is sung as a response to the second reading.</p>
@@ -202,8 +191,6 @@
     </section>
 
     <section id="reading3" class="card">
-      <h2 class="lang-en">Reading III – Isaiah 9:1–6</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 3 – 이사야 9:1-6</h2>
       <p class="lang-en"><em>The People Who Walked in Darkness Have Seen a Great Light</em></p>
       <p class="lang-ko" style="display: none;"><em>어둠 속을 걷던 백성이 큰 빛을 보았도다</em></p>
       <p class="lang-en">The people who walked in darkness have seen a great light; upon those who lived in a land of gloom a light has shone.</p>
@@ -221,8 +208,6 @@
     </section>
 
     <section id="carol3" class="card carol">
-      <h2 class="lang-en">Carol – Lo, How a Rose E'er Blooming</h2>
-      <h2 class="lang-ko" style="display: none;">성가 – 로즈가 피었도다</h2>
       <p class="lang-en"><em>14th Century German melody</em></p>
       <p class="lang-ko" style="display: none;"><em>14세기 독일 선율</em></p>
       <h3 class="lang-en">Verse 1</h3>
@@ -244,8 +229,6 @@
     </section>
 
     <section id="reading4" class="card">
-      <h2 class="lang-en">Reading IV – Isaiah 11:1–9</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 4 – 이사야 11:1-9</h2>
       <p class="lang-en"><em>The Peaceable Kingdom</em></p>
       <p class="lang-ko" style="display: none;"><em>평화로운 왕국</em></p>
       <p class="lang-en">But a shoot shall sprout from the stump of Jesse, and from his roots a bud shall blossom.</p>
@@ -267,8 +250,6 @@
     </section>
 
     <section id="carol4" class="card carol">
-      <h2 class="lang-en">Carol – Once in Royal David's City</h2>
-      <h2 class="lang-ko" style="display: none;">성가 – 다윗 성에 한 번</h2>
       <p class="lang-en"><em>H.J. Gauntlett, arr. David Willcocks</em></p>
       <p class="lang-ko" style="display: none;"><em>H.J. 건틀렛, 편곡 데이비드 윌콕스</em></p>
       <h3 class="lang-en">Verse 1</h3>
@@ -298,8 +279,6 @@
     </section>
 
     <section id="reading5" class="card">
-      <h2 class="lang-en">Reading V – Luke 1:26–38</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 5 – 누가복음 1:26-38</h2>
       <p class="lang-en"><em>The Annunciation</em></p>
       <p class="lang-ko" style="display: none;"><em>성모 영보</em></p>
       <p class="lang-en">In the sixth month, the angel Gabriel was sent from God to a town of Galilee called Nazareth, to a virgin betrothed to a man named Joseph, of the house of David, and the virgin's name was Mary.</p>
@@ -323,8 +302,6 @@
     </section>
 
     <section id="carol5" class="card carol">
-      <h2 class="lang-en">Motet – Ave Maria</h2>
-      <h2 class="lang-ko" style="display: none;">모테트 – 아베 마리아</h2>
       <p class="lang-en"><em>Jacques Arcadelt, 16th Century</em></p>
       <p class="lang-ko" style="display: none;"><em>자크 아르카델트, 16세기</em></p>
       <p class="lang-en">Ave Maria, gratia plena,<br/>
@@ -346,8 +323,6 @@
     </section>
 
     <section id="reading6" class="card">
-      <h2 class="lang-en">Reading VI – Matthew 1:18–25</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 6 – 마태복음 1:18-25</h2>
       <p class="lang-en"><em>The Birth of Jesus Christ</em></p>
       <p class="lang-ko" style="display: none;"><em>예수 그리스도의 탄생</em></p>
       <p class="lang-en">Now this is how the birth of Jesus Christ came about. When his mother Mary was betrothed to Joseph, but before they lived together, she was found with child through the holy Spirit.</p>
@@ -365,8 +340,6 @@
     </section>
 
     <section id="carol6" class="card carol">
-      <h2 class="lang-en">Carol – Silent Night</h2>
-      <h2 class="lang-ko" style="display: none;">성가 – 고요한 밤</h2>
       <p class="lang-en"><em>Franz Gruber, arr. John Rutter</em></p>
       <p class="lang-ko" style="display: none;"><em>프란츠 그루버, 편곡 존 러터</em></p>
       <h3 class="lang-en">Verse 1</h3>
@@ -384,8 +357,6 @@
     </section>
 
     <section id="reading7" class="card">
-      <h2 class="lang-en">Reading VII – Luke 2:8–20</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 7 – 누가복음 2:8-20</h2>
       <p class="lang-en"><em>The Birth of Jesus Announced to Shepherds</em></p>
       <p class="lang-ko" style="display: none;"><em>목자들에게 전해진 예수의 탄생 소식</em></p>
       <p class="lang-en">Now there were shepherds in that region living in the fields and keeping the night watch over their flock.</p>
@@ -415,8 +386,6 @@
     </section>
 
     <section id="carol7" class="card carol">
-      <h2 class="lang-en">Carol – Hark! The Herald Angels Sing</h2>
-      <h2 class="lang-ko" style="display: none;">성가 – 기쁘다 구주 오셨네</h2>
       <p class="lang-en"><em>Felix Mendelssohn, arr. David Willcocks</em></p>
       <p class="lang-ko" style="display: none;"><em>펠릭스 멘델스존, 편곡 데이비드 윌콕스</em></p>
       <h3 class="lang-en">Verse 1</h3>
@@ -434,8 +403,6 @@
     </section>
 
     <section id="reading8" class="card">
-      <h2 class="lang-en">Reading VIII – Matthew 2:1–12</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 8 – 마태복음 2:1-12</h2>
       <p class="lang-en"><em>The Visit of the Magi</em></p>
       <p class="lang-ko" style="display: none;"><em>동방 박사들의 방문</em></p>
       <p class="lang-en">When Jesus was born in Bethlehem of Judea, in the days of King Herod, behold, magi from the east arrived in Jerusalem, saying, "Where is the newborn king of the Jews? We saw his star at its rising and have come to do him homage."</p>
@@ -461,8 +428,6 @@
     </section>
 
     <section id="carol8" class="card carol">
-      <h2 class="lang-en">Carol – In Dulci Jubilo</h2>
-      <h2 class="lang-ko" style="display: none;">성가 – 인 둘치 주빌로</h2>
       <p class="lang-en"><em>Old German carol, arr. R. L. Pearsall</em></p>
       <p class="lang-ko" style="display: none;"><em>고대 독일 성가, 편곡 R. L. 피어솔</em></p>
       <h3 class="lang-en">Verse 1</h3>
@@ -484,8 +449,6 @@
     </section>
 
     <section id="reading9" class="card">
-      <h2 class="lang-en">Reading IX – John 1:1–14</h2>
-      <h2 class="lang-ko" style="display: none;">낭독 9 – 요한복음 1:1-14</h2>
       <p class="lang-en"><em>The Word Became Flesh</em></p>
       <p class="lang-ko" style="display: none;"><em>말씀이 육신이 되셨도다</em></p>
       <p class="lang-en">In the beginning was the Word, and the Word was with God, and the Word was God.</p>
@@ -509,8 +472,6 @@
     </section>
 
     <section id="carol9" class="card carol">
-      <h2 class="lang-en">Carol – O Come, All Ye Faithful</h2>
-      <h2 class="lang-ko" style="display: none;">성가 – 오라 모든 신실한 자들</h2>
       <p class="lang-en"><em>John Francis Wade, arr. David Willcocks</em></p>
       <p class="lang-ko" style="display: none;"><em>존 프랜시스 웨이드, 편곡 데이비드 윌콕스</em></p>
       <h3 class="lang-en">Verse 1</h3>
@@ -534,8 +495,6 @@
     </section>
 
     <section id="closing" class="card">
-      <h2 class="lang-en">Closing Prayer &amp; Final Carol</h2>
-      <h2 class="lang-ko" style="display: none;">마침 기도 및 마지막 성가</h2>
       <p class="lang-en">The service concludes with a closing prayer and blessing.</p>
       <p class="lang-ko" style="display: none;">예배는 마침 기도와 축복으로 마무리됩니다.</p>
       <section class="carol">
@@ -629,6 +588,11 @@
           // Set initial language
           this.switchLanguage('en');
           
+          // Start at the first section (Lessons & Carols)
+          setTimeout(() => {
+            this.scrollToSection(0);
+          }, 100);
+          
           // Update nav buttons
           this.updateNavButtons();
           
@@ -718,16 +682,15 @@
           }
           
           const currentSection = this.sections[this.currentSectionIndex];
-          const heading = currentSection.querySelector(`h2.lang-${lang}`);
+          const sectionId = currentSection.id;
           
-          if (heading) {
-            return heading.textContent.trim();
-          }
-          
-          // Fallback: try to get from h2 without lang class
-          const fallbackHeading = currentSection.querySelector('h2');
-          if (fallbackHeading) {
-            return fallbackHeading.textContent.trim();
+          // Get the section name from the TOC link
+          const tocList = document.querySelector(`ol.lang-${lang}`);
+          if (tocList) {
+            const tocLink = tocList.querySelector(`a[href="#${sectionId}"]`);
+            if (tocLink) {
+              return tocLink.textContent.trim();
+            }
           }
           
           return lang === 'en' ? 'Program Overview' : '프로그램 개요';

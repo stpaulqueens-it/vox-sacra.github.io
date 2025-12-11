@@ -30,6 +30,8 @@ html {
   background: linear-gradient(135deg, #111827, #1f2937);
   color: #f9fafb;
   padding: 1rem 1.5rem 1.25rem;
+  position: relative;
+  z-index: 1;
 }
 
 .header-inner {
@@ -74,14 +76,18 @@ html {
 }
 
 .toc {
-  background: #111827;
+  background: linear-gradient(135deg, #111827, #1f2937);
   color: #e5e7eb;
-  padding: 0.75rem 1.25rem;
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
+  padding: 1rem 1.25rem;
+  position: fixed;
   top: 0;
-  z-index: 20;
+  left: 0;
+  right: 0;
+  z-index: 100;
   width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .toc-inner {
@@ -92,24 +98,23 @@ html {
 
 .toc-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
 }
 
 .toc-toggle {
-  flex: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 0.5rem;
   background: transparent;
   border: none;
-  color: #fbbf24;
-  font-size: 0.95rem;
+  color: #f9fafb;
+  font-size: 1.1rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.5rem 0;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   transition: color 0.2s;
 }
@@ -193,6 +198,8 @@ html {
   -ms-overflow-style: none; /* IE and Edge */
   min-height: calc(100vh - 200px);
   margin-bottom: 80px;
+  margin-top: 60px;
+  padding-top: 0;
   position: relative;
 }
 
@@ -257,6 +264,15 @@ html {
 
 .carol h2 {
   color: #4338ca;
+}
+
+.cover-photo {
+  width: 100%;
+  height: calc(100vh - 150px);
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  border-radius: 0.5rem;
 }
 
 .site-footer {
