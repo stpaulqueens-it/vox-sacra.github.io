@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html :lang="currentLang === 'en' ? 'en' : 'ko'">
 <head>
   <meta charset="UTF-8" />
   <title>Lessons &amp; Carols – Program</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Program for Lessons &amp; Carols: readings and carols in English and Korean.">
   <link rel="stylesheet" href="styles.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body>
+<body x-data="app()" x-init="init()">
   <header class="site-header">
     <div class="header-inner">
       <h1 class="lang-ko">말씀과 성가</h1>
@@ -18,13 +19,13 @@
   <nav class="toc">
     <div class="toc-inner">
       <div class="toc-bar">
-        <button class="toc-toggle" id="tocToggle" aria-expanded="false">
+        <button class="toc-toggle" @click="tocOpen = !tocOpen" :aria-expanded="tocOpen">
           <span class="lang-en">Program Overview</span>
           <span class="lang-ko" style="display: none;">프로그램 개요</span>
-          <span class="toc-arrow">▼</span>
+          <span class="toc-arrow" x-text="tocOpen ? '▲' : '▼'">▼</span>
         </button>
       </div>
-      <div class="toc-content" id="tocContent">
+      <div class="toc-content" x-show="tocOpen" x-transition>
       <ol class="lang-en">
         <li><a href="#opening">Opening Music &amp; Prayer</a></li>
         <li><a href="#reading1">Reading I – Genesis 3:8–15</a></li>
@@ -73,7 +74,7 @@
     </div>
   </nav>
 
-  <main class="content" id="mainContent">
+  <main class="content" id="mainContent" @scroll="updateNavButtons()" x-ref="mainContent">
     <section id="opening" class="card">
       <h2 class="lang-en">Opening Music</h2>
       <h2 class="lang-ko" style="display: none;">시작 음악</h2>
@@ -547,16 +548,16 @@
 
   <nav class="bottom-nav">
     <div class="bottom-nav-inner">
-      <button class="nav-arrow nav-arrow-left" id="navLeft" aria-label="Previous section">
+      <button class="nav-arrow nav-arrow-left" @click="scrollToSection(currentSectionIndex - 1)" :disabled="currentSectionIndex === 0" aria-label="Previous section">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M15 18l-6-6 6-6"/>
         </svg>
       </button>
       <div class="language-toggle">
-        <button id="langToggle" class="lang-btn active" data-lang="en">English</button>
-        <button class="lang-btn" data-lang="ko">한국어</button>
+        <button class="lang-btn" :class="{ active: currentLang === 'en' }" @click="switchLanguage('en')">English</button>
+        <button class="lang-btn" :class="{ active: currentLang === 'ko' }" @click="switchLanguage('ko')">한국어</button>
       </div>
-      <button class="nav-arrow nav-arrow-right" id="navRight" aria-label="Next section">
+      <button class="nav-arrow nav-arrow-right" @click="scrollToSection(currentSectionIndex + 1)" :disabled="currentSectionIndex === sections.length - 1" aria-label="Next section">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 18l6-6-6-6"/>
         </svg>
@@ -564,148 +565,100 @@
     </div>
   </nav>
   <script>
-    // Language toggle functionality
-    const langToggle = document.getElementById('langToggle');
-    const langButtons = document.querySelectorAll('.lang-btn');
-    const langEnElements = document.querySelectorAll('.lang-en');
-    const langKoElements = document.querySelectorAll('.lang-ko');
-    
-    // Set initial language (default to English)
-    let currentLang = 'en';
-    
-    function switchLanguage(lang) {
-      currentLang = lang;
-      
-      // Update button states
-      langButtons.forEach(btn => {
-        if (btn.dataset.lang === lang) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
+    function app() {
+      return {
+        currentLang: 'en',
+        tocOpen: false,
+        currentSectionIndex: 0,
+        sections: [],
+        
+        init() {
+          // Initialize sections
+          this.sections = Array.from(this.$refs.mainContent.querySelectorAll('section.card'));
+          
+          // Set initial language
+          this.switchLanguage('en');
+          
+          // Update nav buttons
+          this.updateNavButtons();
+          
+          // Handle hash navigation (for TOC links)
+          window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.slice(1);
+            const targetSection = this.sections.find(s => s.id === hash);
+            if (targetSection) {
+              const index = this.sections.indexOf(targetSection);
+              this.scrollToSection(index);
+            }
+          });
+          
+          // Handle initial hash if present
+          if (window.location.hash) {
+            setTimeout(() => {
+              const hash = window.location.hash.slice(1);
+              const targetSection = this.sections.find(s => s.id === hash);
+              if (targetSection) {
+                const index = this.sections.indexOf(targetSection);
+                this.scrollToSection(index);
+              }
+            }, 100);
+          }
+          
+          // Handle keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+              e.preventDefault();
+              this.scrollToSection(this.currentSectionIndex - 1);
+            } else if (e.key === 'ArrowRight') {
+              e.preventDefault();
+              this.scrollToSection(this.currentSectionIndex + 1);
+            }
+          });
+          
+          // Update nav buttons on resize
+          window.addEventListener('resize', () => {
+            this.updateNavButtons();
+          });
+        },
+        
+        switchLanguage(lang) {
+          this.currentLang = lang;
+          const langEnElements = document.querySelectorAll('.lang-en');
+          const langKoElements = document.querySelectorAll('.lang-ko');
+          
+          // Show/hide language-specific elements
+          if (lang === 'en') {
+            langEnElements.forEach(el => el.style.display = '');
+            langKoElements.forEach(el => el.style.display = 'none');
+          } else {
+            langEnElements.forEach(el => el.style.display = 'none');
+            langKoElements.forEach(el => el.style.display = '');
+          }
+        },
+        
+        getCurrentSectionIndex() {
+          const scrollLeft = this.$refs.mainContent.scrollLeft;
+          const viewportWidth = window.innerWidth;
+          const currentIndex = Math.round(scrollLeft / viewportWidth);
+          return Math.min(currentIndex, this.sections.length - 1);
+        },
+        
+        scrollToSection(index) {
+          if (index < 0 || index >= this.sections.length) return;
+          const viewportWidth = window.innerWidth;
+          const targetScroll = index * viewportWidth;
+          
+          this.$refs.mainContent.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+          });
+        },
+        
+        updateNavButtons() {
+          this.currentSectionIndex = this.getCurrentSectionIndex();
         }
-      });
-      
-      // Show/hide language-specific elements
-      if (lang === 'en') {
-        langEnElements.forEach(el => el.style.display = '');
-        langKoElements.forEach(el => el.style.display = 'none');
-      } else {
-        langEnElements.forEach(el => el.style.display = 'none');
-        langKoElements.forEach(el => el.style.display = '');
       }
-      
-      // Update HTML lang attribute
-      document.documentElement.lang = lang === 'en' ? 'en' : 'ko';
     }
-    
-    // Add click handlers to language buttons
-    langButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        switchLanguage(btn.dataset.lang);
-      });
-    });
-    
-    // Initialize with English
-    switchLanguage('en');
-    
-    // Table of contents dropdown functionality
-    const tocToggle = document.getElementById('tocToggle');
-    const tocContent = document.getElementById('tocContent');
-    
-    tocToggle.addEventListener('click', () => {
-      const isExpanded = tocToggle.getAttribute('aria-expanded') === 'true';
-      tocToggle.setAttribute('aria-expanded', !isExpanded);
-      tocContent.style.display = isExpanded ? 'none' : 'block';
-      const arrow = tocToggle.querySelector('.toc-arrow');
-      arrow.textContent = isExpanded ? '▼' : '▲';
-    });
-    
-    // Section navigation functionality
-    const mainContent = document.getElementById('mainContent');
-    const sections = Array.from(mainContent.querySelectorAll('section.card'));
-    const navLeft = document.getElementById('navLeft');
-    const navRight = document.getElementById('navRight');
-    
-    function getCurrentSectionIndex() {
-      const scrollLeft = mainContent.scrollLeft;
-      const viewportWidth = window.innerWidth;
-      const currentIndex = Math.round(scrollLeft / viewportWidth);
-      return Math.min(currentIndex, sections.length - 1);
-    }
-    
-    function scrollToSection(index) {
-      if (index < 0 || index >= sections.length) return;
-      const section = sections[index];
-      const viewportWidth = window.innerWidth;
-      const targetScroll = index * viewportWidth;
-      
-      mainContent.scrollTo({
-        left: targetScroll,
-        behavior: 'smooth'
-      });
-    }
-    
-    function updateNavButtons() {
-      const currentIndex = getCurrentSectionIndex();
-      navLeft.disabled = currentIndex === 0;
-      navRight.disabled = currentIndex === sections.length - 1;
-    }
-    
-    navLeft.addEventListener('click', () => {
-      const currentIndex = getCurrentSectionIndex();
-      scrollToSection(currentIndex - 1);
-    });
-    
-    navRight.addEventListener('click', () => {
-      const currentIndex = getCurrentSectionIndex();
-      scrollToSection(currentIndex + 1);
-    });
-    
-    // Update nav buttons on scroll
-    mainContent.addEventListener('scroll', updateNavButtons);
-    
-    // Update nav buttons on resize
-    window.addEventListener('resize', () => {
-      updateNavButtons();
-    });
-    
-    // Initialize nav buttons
-    updateNavButtons();
-    
-    // Handle hash navigation (for TOC links)
-    window.addEventListener('hashchange', () => {
-      const hash = window.location.hash.slice(1);
-      const targetSection = sections.find(s => s.id === hash);
-      if (targetSection) {
-        const index = sections.indexOf(targetSection);
-        scrollToSection(index);
-      }
-    });
-    
-    // Handle initial hash if present
-    if (window.location.hash) {
-      setTimeout(() => {
-        const hash = window.location.hash.slice(1);
-        const targetSection = sections.find(s => s.id === hash);
-        if (targetSection) {
-          const index = sections.indexOf(targetSection);
-          scrollToSection(index);
-        }
-      }, 100);
-    }
-    
-    // Handle keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const currentIndex = getCurrentSectionIndex();
-        scrollToSection(currentIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        const currentIndex = getCurrentSectionIndex();
-        scrollToSection(currentIndex + 1);
-      }
-    });
   </script>
 </body>
 </html>
