@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeNavigation();
     initializeTOC();
     initializeTextControls();
+    initializeInfoModal();
     updateLanguage();
     preventIOSZoom();
 });
@@ -246,6 +247,48 @@ function setFontSize(size) {
     }
 }
 
+// Info Modal functions
+function initializeInfoModal() {
+    const infoButton = document.getElementById('infoButton');
+    const infoModal = document.getElementById('infoModal');
+    const modalClose = document.getElementById('modalClose');
+    
+    if (infoButton && infoModal) {
+        infoButton.addEventListener('click', () => {
+            infoModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+        
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                closeInfoModal();
+            });
+        }
+        
+        // Close modal when clicking outside
+        infoModal.addEventListener('click', (e) => {
+            if (e.target === infoModal) {
+                closeInfoModal();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && infoModal.classList.contains('active')) {
+                closeInfoModal();
+            }
+        });
+    }
+}
+
+function closeInfoModal() {
+    const infoModal = document.getElementById('infoModal');
+    if (infoModal) {
+        infoModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
 // Translations object
 const translations = {
     en: {
@@ -343,6 +386,10 @@ const translations = {
         'feedback-text': 'We\'d love to hear your thoughts about this service.',
         'feedback-link': 'Provide Feedback',
         'feedback-url': 'https://forms.gle/VoiqR5hhWGPdjgmJ7',
+        'info-title': 'About Vox Sacra',
+        'info-mission': '<p>To sublimate the talents the Lord has given us into sacred music of love and generosity, and to offer glory to God—this is the mission of the Vox Sacra Ensemble.</p><p>We are a group of Catholic faithful residing in New York, united by a shared passion for music. Our repertoire spans the breadth of Catholic tradition, from its deep-rooted sacred music to contemporary works of our time.</p><p>Through various apostolic activities—such as retreats, charity concerts, and liturgical music—we strive to faithfully live out our calling to proclaim the Gospel through music. We warmly ask for your encouragement, support, and prayers as we continue to expand our apostolic and musical endeavors.</p><p><i>If you would like to become a member or supporter, please refer to the link below.</i></p>',
+        'sponsorship-button': 'Support Vox Sacra',
+        'sponsorship-url': 'https://forms.gle/31Xxs7rC2Cf6x9pd6',
         'font-size-label': 'Font Size',
         'language-label': 'Language'
     },
@@ -441,6 +488,10 @@ const translations = {
         'feedback-text': '이 예배에 대한 여러분의 생각을 듣고 싶습니다.',
         'feedback-link': '피드백 제공',
         'feedback-url': 'https://forms.gle/PQ7d4zRT9yns6YaK7',
+        'info-title': '복스 사크라 소개',
+        'info-mission': '<p>주님께서 주신 달란트를 사랑과 나눔의 성음악으로 승화시켜 하느님께 영광을 드리는 것—이것이 Vox Sacra Ensemble 의사명입니다.</p><p>뉴욕에 거주하는 천주교 신자들로 이루어진 저희는 음악에 대한 열정을 바탕으로, 가톨릭 전통의 뿌리 깊은 성음악에서 부터 우리 시대의 가톨릭 음악 까지 폭넓게 연주하고 있습니다.</p><p>또한 피정, 자선 음악회, 전례 음악 등 다양한 사도적 활동을 통해 음악 안에서 복음을 선포하는 소명을 꾸준히 실천하고자 합니다. 앞으로도 저희가 펼쳐 나갈 사도직과 음악 활동에 많은 격려와 응원, 그리고 기도로 함께해 주시기를 바랍니다.</p><p><i>* 단 원 이 되 고 싶 으 시 거 나 후 원 회 원 이 되 고 싶 은 분 은 아 래 의 링 크 를 참 조 해 주 세 요</i></p>',
+        'sponsorship-button': '복스 사크라 후원하기',
+        'sponsorship-url': 'https://forms.gle/PQ7d4zRT9yns6YaK7',
         'font-size-label': '글자 크기',
         'language-label': '언어'
     }
@@ -460,8 +511,8 @@ function updateLanguage() {
     document.querySelectorAll('[data-translate]').forEach(element => {
         const key = element.getAttribute('data-translate');
         if (translation[key]) {
-            // Use innerHTML for elements that contain formatted content (readings, carols)
-            if (element.classList.contains('reading-text') || element.classList.contains('carol-text')) {
+            // Use innerHTML for elements that contain formatted content (readings, carols, info-mission)
+            if (element.classList.contains('reading-text') || element.classList.contains('carol-text') || element.classList.contains('info-mission')) {
                 element.innerHTML = translation[key];
             } else {
                 element.textContent = translation[key];

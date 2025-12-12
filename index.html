@@ -14,6 +14,9 @@
                 <span class="toc-icon">☰</span>
                 <span class="toc-label" data-translate="toc-label">Table of Contents</span>
             </button>
+            <button class="info-button" id="infoButton" aria-label="About Vox Sacra">
+                <span class="info-icon">ℹ️</span>
+            </button>
             <nav class="toc-dropdown" id="tocDropdown">
                 <ul class="toc-list">
                     <li><a href="#cover" class="toc-link active" data-section="cover" data-translate="toc-cover">Cover</a></li>
@@ -40,7 +43,6 @@
                     <li><a href="#reading9" class="toc-link" data-section="reading9" data-translate="toc-reading9">Reading IX</a></li>
                     <li><a href="#carol9" class="toc-link" data-section="carol9" data-translate="toc-carol9">O Come, All Ye Faithful</a></li>
                     <li><a href="#closing" class="toc-link" data-section="closing" data-translate="toc-closing">Closing Prayer & Final Carol</a></li>
-                    <li><a href="#feedback" class="toc-link" data-section="feedback" data-translate="toc-feedback">Feedback</a></li>
                 </ul>
             </nav>
         </div>
@@ -245,13 +247,6 @@
             </div>
         </section>
 
-        <!-- Feedback -->
-        <section id="feedback" class="section" data-section="feedback">
-            <div class="section-content feedback-content">
-                <p class="feedback-text" data-translate="feedback-text">We'd love to hear your thoughts about this service.</p>
-                <a href="https://forms.gle/VoiqR5hhWGPdjgmJ7" target="_blank" rel="noopener noreferrer" class="feedback-link" data-translate="feedback-link" data-translate-url="feedback-url">Provide Feedback</a>
-            </div>
-        </section>
     </main>
 
     <!-- Bottom Bar with Controls -->
@@ -287,6 +282,18 @@
             <span>›</span>
         </button>
     </footer>
+
+    <!-- Info Modal -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Close Modal">×</button>
+            <h2 class="modal-title" data-translate="info-title">About Vox Sacra</h2>
+            <div class="modal-body">
+                <div class="info-mission" data-translate="info-mission"></div>
+                <a href="#" class="sponsorship-button" id="sponsorshipLink" data-translate="sponsorship-button" data-translate-url="sponsorship-url" target="_blank" rel="noopener noreferrer">Support Vox Sacra</a>
+            </div>
+        </div>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
