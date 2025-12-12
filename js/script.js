@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeTOC();
     initializeTextControls();
     initializeInfoModal();
-    updateLanguage();
+    initializeLanguageModal();
+    checkLanguagePreference(); // This will call updateLanguage() if preference exists
     preventIOSZoom();
 });
 
@@ -289,6 +290,69 @@ function closeInfoModal() {
     }
 }
 
+// Language Selection Modal functions
+function initializeLanguageModal() {
+    const languageModal = document.getElementById('languageModal');
+    const languageButtons = document.querySelectorAll('.language-option-btn');
+    
+    if (languageModal && languageButtons.length > 0) {
+        languageButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                selectLanguage(lang);
+            });
+        });
+    }
+}
+
+function checkLanguagePreference() {
+    const savedLanguage = localStorage.getItem('voxSacraLanguage');
+    const languageModal = document.getElementById('languageModal');
+    
+    if (savedLanguage) {
+        // Language preference already saved, use it
+        setLanguage(savedLanguage);
+        // Update active button in language controls
+        updateLanguageButtons(savedLanguage);
+    } else {
+        // No preference saved, show language selection modal
+        // Set default to English for initial display
+        state.language = 'en';
+        document.documentElement.setAttribute('lang', 'en');
+        updateLanguage();
+        if (languageModal) {
+            languageModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+    }
+}
+
+function selectLanguage(lang) {
+    const languageModal = document.getElementById('languageModal');
+    
+    // Set the language
+    setLanguage(lang);
+    
+    // Update active button in language controls
+    updateLanguageButtons(lang);
+    
+    // Close the modal
+    if (languageModal) {
+        languageModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+}
+
+function updateLanguageButtons(lang) {
+    const languageButtons = document.querySelectorAll('.language-btn');
+    languageButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-lang') === lang) {
+            btn.classList.add('active');
+        }
+    });
+}
+
 // Translations object
 const translations = {
     en: {
@@ -390,6 +454,8 @@ const translations = {
         'info-mission': '<p>To made good use of the talents the Lord has given us into sacred music of love and generosity, and to offer glory to God—this is the mission of the <b>Vox Sacra Ensemble</b>.</p><p>We are a group of Catholic faithful residing in New York, united by a shared passion for music. Our repertoire spans the breadth of Catholic tradition, from its deep-rooted sacred music to contemporary works of our time.</p><p>Through various apostolic activities—such as retreats, charity concerts, and liturgical music—we strive to faithfully live out our calling to proclaim the Gospel through music. We warmly ask for your encouragement, support, and prayers as we continue to expand our apostolic and musical endeavors.</p><p><i>If you would like to become a member or supporter, please refer to the link below.</i></p>',
         'sponsorship-button': 'Support Vox Sacra',
         'sponsorship-url': 'https://forms.gle/31Xxs7rC2Cf6x9pd6',
+        'language-modal-title': 'Select Language',
+        'language-modal-text': 'Please select your preferred language:',
         'font-size-label': 'Font Size',
         'language-label': 'Language'
     },
@@ -492,6 +558,8 @@ const translations = {
         'info-mission': '<p>주님께서 주신 달란트를 사랑과 나눔의 성음악으로 승화시켜 하느님께 영광을 드리는 것—이것이 <b>Vox Sacra Ensemble</b> 의사명입니다.</p><p>뉴욕에 거주하는 천주교 신자들로 이루어진 저희는 음악에 대한 열정을 바탕으로, 가톨릭 전통의 뿌리 깊은 성음악에서 부터 우리 시대의 가톨릭 음악 까지 폭넓게 연주하고 있습니다.</p><p>또한 피정, 자선 음악회, 전례 음악 등 다양한 사도적 활동을 통해 음악 안에서 복음을 선포하는 소명을 꾸준히 실천하고자 합니다. 앞으로도 저희가 펼쳐 나갈 사도직과 음악 활동에 많은 격려와 응원, 그리고 기도로 함께해 주시기를 바랍니다.</p><p><i>* 단 원 이 되 고 싶 으 시 거 나 후 원 회 원 이 되 고 싶 은 분 은 아 래 의 링 크 를 참 조 해 주 세 요</i></p>',
         'sponsorship-button': '복스 사크라 후원하기',
         'sponsorship-url': 'https://forms.gle/PQ7d4zRT9yns6YaK7',
+        'language-modal-title': '언어 선택',
+        'language-modal-text': '선호하는 언어를 선택해 주세요:',
         'font-size-label': '글자 크기',
         'language-label': '언어'
     }
@@ -500,6 +568,8 @@ const translations = {
 function setLanguage(lang) {
     state.language = lang;
     document.documentElement.setAttribute('lang', lang);
+    // Save preference to localStorage
+    localStorage.setItem('voxSacraLanguage', lang);
     updateLanguage();
 }
 
